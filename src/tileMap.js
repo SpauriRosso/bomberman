@@ -16,6 +16,7 @@ export default class TileMap {
       [1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1],
     ];
   }
+  // We need to make more maps
 
   getMap() {
     return this.map;
