@@ -3,6 +3,7 @@ import { World, Entity } from "./ecs/core.js";
 import * as Components from "./ecs/components.js";
 import * as Systems from "./ecs/systems.js";
 import Collision from "./Collision.js";
+import Timer from "./HUD-script/Timer.js";
 import Player from "./Player.js";
 import Bomb from "./Bomb.js";
 import Enemies from "./Enemies.js";
@@ -12,6 +13,8 @@ export default class Bomberman {
     this.board = document.getElementById("game-board");
     this.tileMap = new TileMap();
     this.collision = new Collision(this.tileMap);
+    this.timer = new Timer();
+    this.timer.start();
 
     this.init();
   }
