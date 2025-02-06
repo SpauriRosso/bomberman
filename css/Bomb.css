@@ -1,0 +1,12 @@
+.bomb {
+  background-color: black;
+  z-index: 5;
+  position: absolute;
+}
+
+.explosion {
+  background-color: red;
+  z-index: 15;
+  position: absolute;
+  opacity: 0.7;
+}

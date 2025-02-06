@@ -1,0 +1,10 @@
+.player {
+  background-color: blue;
+  width: 36px;
+  height: 36px;
+  position: absolute;
+  top: 2px;
+  left: 2px;
+  z-index: 10;
+  border-radius: 50%; /* Make it a circle for better visibility */
+}
