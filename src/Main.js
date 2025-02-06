@@ -1,4 +1,7 @@
 import TileMap from "./tileMap.js";
+import { World, Entity } from "./ecs/core.js";
+import * as Components from "./ecs/components.js";
+import * as Systems from "./ecs/systems.js";
 import Collision from "./Collision.js";
 import Player from "./Player.js";
 import Bomb from "./Bomb.js";
