@@ -5,6 +5,17 @@ export default class Bomb {
     this.gameBoard = gameBoard;
     this.tileMap = tileMap;
     this.collision = collision;
+    this.isPlaced = false;
+
+    // Add event listener for spacebar key press
+    document.addEventListener("keydown", (event) => {
+      if (event.keyCode === 32 && !this.isPlaced) {
+        // Spacebar key code
+        this.place();
+        this.isPlaced = true;
+        console.log("spacebar key pressed, bomb planted!");
+      }
+    });
   }
 
   place() {
