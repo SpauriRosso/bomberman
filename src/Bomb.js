@@ -1,4 +1,7 @@
 export default class Bomb {
+  // Static property to track if any bomb is currently active
+  static activeBomb = false;
+
   constructor(x, y, gameBoard, tileMap, collision) {
     this.x = x;
     this.y = y;
@@ -6,36 +9,56 @@ export default class Bomb {
     this.tileMap = tileMap;
     this.collision = collision;
     this.isPlaced = false;
+    this.isDetonated = false;
+    this.bombElement = null;
+    this.explosionElements = [];
+    this.boundHandleKeyPress = this.handleKeyPress.bind(this);
 
-    // Add event listener for spacebar key press
-    document.addEventListener("keydown", (event) => {
-      if (event.keyCode === 32 && !this.isPlaced) {
-        // Spacebar key code
-        this.place();
-        this.isPlaced = true;
-        console.log("spacebar key pressed, bomb planted!");
-      }
-    });
+    document.addEventListener("keydown", this.boundHandleKeyPress);
   }
 
-  place() {
+  handleKeyPress(event) {
+    if (
+      event.keyCode === 32 &&
+      !this.isPlaced &&
+      !this.isDetonated &&
+      !Bomb.activeBomb
+    ) {
+      this.place();
+      console.log("spacebar key pressed, bomb planted!");
+    }
+  }
+
+  async place() {
+    if (this.isPlaced || Bomb.activeBomb) return;
+
+    this.isPlaced = true;
+    Bomb.activeBomb = true;
+    document.removeEventListener("keydown", this.boundHandleKeyPress);
+
     const bombTile = this.gameBoard.querySelector(
       `.tile[data-x="${this.x}"][data-y="${this.y}"]`
     );
 
-    const bombElement = document.createElement("div");
-    bombElement.classList.add("bomb");
-    bombTile.appendChild(bombElement);
+    // Remove any existing bombs on this tile
+    const existingBomb = bombTile.querySelector(".bomb");
+    if (existingBomb) {
+      existingBomb.remove();
+    }
 
-    return new Promise((resolve) => {
-      setTimeout(() => {
-        this.detonate();
-        resolve();
-      }, 2000);
-    });
+    this.bombElement = document.createElement("div");
+    this.bombElement.classList.add("bomb");
+    bombTile.appendChild(this.bombElement);
+
+    // Wait for detonation
+    await new Promise((resolve) => setTimeout(resolve, 2000));
+    await this.detonate();
   }
 
-  detonate() {
+  async detonate() {
+    if (this.isDetonated) return;
+
+    this.isDetonated = true;
     const explosionDirections = [
       { dx: 0, dy: 0 }, // Center
       { dx: -1, dy: 0 }, // Left
@@ -43,6 +66,9 @@ export default class Bomb {
       { dx: 0, dy: -1 }, // Up
       { dx: 0, dy: 1 }, // Down
     ];
+
+    // Clear any existing explosions first
+    this.clearAllExplosions();
 
     explosionDirections.forEach(({ dx, dy }) => {
       const explodeX = this.x + dx;
@@ -53,33 +79,56 @@ export default class Bomb {
           `.tile[data-x="${explodeX}"][data-y="${explodeY}"]`
         );
 
-        const explosionElement = document.createElement("div");
-        explosionElement.classList.add("explosion");
-        explosionTile.appendChild(explosionElement);
+        if (explosionTile) {
+          // Clear any existing explosion
+          const existingExplosion = explosionTile.querySelector(".explosion");
+          if (existingExplosion) {
+            existingExplosion.remove();
+          }
 
-        // Destroy bricks
-        this.tileMap.destroyBrick(explodeX, explodeY);
+          const explosionElement = document.createElement("div");
+          explosionElement.classList.add("explosion");
+          explosionTile.appendChild(explosionElement);
+          this.explosionElements.push(explosionElement);
+
+          // Destroy bricks
+          this.tileMap.destroyBrick(explodeX, explodeY);
+        }
       }
     });
 
-    this.clearExplosion(explosionDirections);
+    // Remove bomb element
+    if (this.bombElement && this.bombElement.parentNode) {
+      this.bombElement.remove();
+      this.bombElement = null;
+    }
+
+    // Clear explosions after delay
+    await new Promise((resolve) => setTimeout(resolve, 500));
+    this.clearAllExplosions();
+
+    // Reset the active bomb flag after explosion is complete
+    Bomb.activeBomb = false;
   }
 
-  clearExplosion(explosionDirections) {
-    setTimeout(() => {
-      const bombTile = this.gameBoard.querySelector(
-        `.tile[data-x="${this.x}"][data-y="${this.y}"]`
-      );
-      bombTile.querySelector(".bomb")?.remove();
+  clearAllExplosions() {
+    // Clear all explosion elements
+    this.explosionElements.forEach((element) => {
+      if (element && element.parentNode) {
+        element.remove();
+      }
+    });
+    this.explosionElements = [];
+  }
 
-      explosionDirections.forEach(({ dx, dy }) => {
-        const explodeX = this.x + dx;
-        const explodeY = this.y + dy;
-        const explosionTile = this.gameBoard.querySelector(
-          `.tile[data-x="${explodeX}"][data-y="${explodeY}"]`
-        );
-        explosionTile.querySelector(".explosion")?.remove();
-      });
-    }, 500);
+  destroy() {
+    document.removeEventListener("keydown", this.boundHandleKeyPress);
+    this.clearAllExplosions();
+    if (this.bombElement && this.bombElement.parentNode) {
+      this.bombElement.remove();
+    }
+    this.isPlaced = true;
+    this.isDetonated = true;
+    Bomb.activeBomb = false;
   }
 }
