@@ -2,11 +2,13 @@
   background-color: black;
   z-index: 5;
   position: absolute;
+  width: 40px;
+  height: 40px;
 }
 
 .explosion {
-  background-color: red;
-  z-index: 15;
   position: absolute;
-  opacity: 0.7;
+  background-color: red;
+  width: 40px;
+  height: 40px;
 }
