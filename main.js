@@ -25,6 +25,8 @@ function gameLoop() {
   gameLogicSystem.update();
 
   // requestAnimationFrame(gameLoop);
+
+  // setTimeout(gameLoop, 1000 / fps);
 }
 
 console.log("player position on the map", findPlayerPosition());
