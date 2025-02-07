@@ -3,7 +3,11 @@ export default class Player {
     this.x = x;
     this.y = y;
     this.gameBoard = gameBoard;
-    console.log("Player initialized:", { x, y, gameBoard });
+    console.log("Player initialized:", "player rended successfuly", {
+      x,
+      y,
+      gameBoard,
+    });
   }
 
   render() {
@@ -25,7 +29,7 @@ export default class Player {
     const playerElement = document.createElement("div");
     playerElement.classList.add("player");
     playerTile.appendChild(playerElement);
-    console.log("Player rendered successfully");
+    // console.log("Player rendered successfully");
   }
 
   move(dx, dy, collision) {
@@ -35,9 +39,6 @@ export default class Player {
     if (collision.checkCollision(newX, newY)) {
       const currentTile = this.gameBoard.querySelector(
         `.tile[data-x="${this.x}"][data-y="${this.y}"]`
-      );
-      const newTile = this.gameBoard.querySelector(
-        `.tile[data-x="${newX}"][data-y="${newY}"]`
       );
 
       currentTile.querySelector(".player")?.remove();

@@ -25,7 +25,6 @@ export default class Bomb {
       !Bomb.activeBomb
     ) {
       this.place();
-      console.log("spacebar key pressed, bomb planted!");
     }
   }
 

@@ -82,6 +82,7 @@ export default class Bomberman {
           break;
         case " ":
           this.placeBomb();
+          console.log("spacebar key pressed, bomb planted!");
           break;
       }
     });
