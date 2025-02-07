@@ -1,7 +1,5 @@
-class PowerUpComponent {
-    constructor(type) {
-        this.type = type;
-    }
+export default class PowerUpComponent {
+  constructor(type) {
+    this.type = type;
+  }
 }
-
-export default PowerUpComponent;
