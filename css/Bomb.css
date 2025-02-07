@@ -5,6 +5,19 @@
   width: 40px;
   height: 40px;
   border-radius: 4px;
+  animation: pulse 1s infinite;
+}
+
+@keyframes pulse {
+  0% {
+    transform: scale(1);
+  }
+  50% {
+    transform: scale(0.9);
+  }
+  100% {
+    transform: scale(1);
+  }
 }
 
 .explosion {
@@ -13,4 +26,16 @@
   width: 40px;
   height: 40px;
   border-radius: 4px;
+  animation: explode 0.5s ease-in-out;
+}
+
+@keyframes explode {
+  0% {
+    transform: scale(0);
+    opacity: 1;
+  }
+  100% {
+    transform: scale(1.5);
+    opacity: 0;
+  }
 }

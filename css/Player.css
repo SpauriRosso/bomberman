@@ -7,4 +7,5 @@
   left: 2px;
   z-index: 10;
   border-radius: 50%;
+  transition: all 0.1s;
 }
