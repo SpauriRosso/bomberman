@@ -21,9 +21,25 @@ export default class InputComponent {
     this.y = 0;
 
     // Mise à jour en fonction des touches pressées
-    if (this.keys.has("q")) this.x = -1;
-    if (this.keys.has("d")) this.x = 1;
-    if (this.keys.has("z")) this.y = -1;
-    if (this.keys.has("s")) this.y = 1;
+    for (const key of this.keys) {
+      switch (key) {
+        case "q":
+          this.x = -1;
+          break;
+        case "d":
+          this.x = 1;
+          break;
+        case "z":
+          this.y = -1;
+          break;
+        case "s":
+          this.y = 1;
+          break;
+        default:
+          // Handle unknown keys
+          console.log(`Unknown key: ${key}`);
+          break;
+      }
+    }
   }
 }
