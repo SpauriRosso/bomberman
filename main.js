@@ -21,10 +21,19 @@ gameLogicSystem.addSystem(new RenderSystem());
 
 console.log(gameLogicSystem);
 
-function gameLoop() {
-  gameLogicSystem.update();
+let lastFrameTime = 0;
 
-  // requestAnimationFrame(gameLoop);
+function gameLoop() {
+  const currentTime = performance.now();
+  const deltaTime = currentTime - lastFrameTime;
+  lastFrameTime = currentTime;
+
+  if (deltaTime > 16) {
+    // 16ms = 60fps
+    gameLogicSystem.update();
+
+    requestAnimationFrame(gameLoop);
+  }
 }
 
 console.log("player position on the map", findPlayerPosition());
