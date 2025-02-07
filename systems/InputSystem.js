@@ -1,5 +1,11 @@
 class InputSystem {
   update(entities) {
-    // Gérer les entrées de l'utilisateur
+    entities.forEach((entity) => {
+      const inputComponent = entity.getComponent("InputComponent");
+      if (inputComponent) {
+        // Handle user input
+        inputComponent.update();
+      }
+    });
   }
 }

@@ -1,4 +1,4 @@
-class GameLogicSystem {
+export default class GameLogicSystem {
   constructor() {
     this.entities = [];
     this.systems = [];
@@ -14,8 +14,7 @@ class GameLogicSystem {
   update() {
     this.systems.forEach((system) => {
       system.update(this.entities);
+      // console.log(system.constructor.name); // Removed logging for clarity
     });
   }
 }
-
-export default GameLogicSystem;
