@@ -3,11 +3,13 @@ export default class RenderSystem {
     this.container = document.getElementById("gameGrid");
   }
   update(entities) {
+    console.log("Updating render system...");
     // Afficher les entités sur l'écran
     entities.forEach((entity) => {
       let entityDOM = document.createElement("div");
 
       entityDOM.id = entity.id;
+      console.log("Entity ID:", entity.id);
 
       let position = entity.getComponent("position");
       let offset = { x: 0, y: 0 };
@@ -17,11 +19,7 @@ export default class RenderSystem {
       entityDOM.style.width = "64px";
       entityDOM.style.height = "64px";
 
-      if (entity.getComponent("PlayerComponent")) {
-        entityDOM.style.background = "url('path/to/player/sprite.png')"; // Set player sprite
-      } else {
-        entityDOM.style.background = "black"; // Default for other entities
-      }
+      entityDOM.style.background = "black"; // Default for other entities
 
       this.container.appendChild(entityDOM);
     });

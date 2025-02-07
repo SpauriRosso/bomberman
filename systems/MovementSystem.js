@@ -1,5 +1,6 @@
 export default class MovementSystem {
   update(entities) {
+    console.log("Updating movement system...");
     entities.forEach((entity) => {
       const position = entity.getComponent("position");
       const velocity = entity.getComponent("velocity");
