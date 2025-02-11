@@ -6,10 +6,10 @@ const scoreManager = new ScoreManager();*/
 import PlayerEntity from "./entities/PlayerEntity.js";
 import GameLogicSystem from "./systems/GameLogicSystem.js";
 import RenderSystem from "./systems/RenderSystem.js";
-import { generateGrid, findPlayerPosition } from "./utils/tileMap.js";
+import { generateGrid, findPlayerPosition } from "./utils/TileMap.js";
 import MovementSystem from "./systems/MovementSystem.js";
 
-import { tileMapDefault } from "./utils/tileMap.js";
+import { tileMapDefault } from "./utils/TileMap.js";
 import CollisionSystem from "./systems/CollisionSystem.js";
 
 const collisionSystem = new CollisionSystem(tileMapDefault); // Initialisation

@@ -1,4 +1,4 @@
-import { tileMapDefault } from "../utils/tileMap.js";
+import { tileMapDefault } from "../utils/TileMap.js";
 
 export default class CollisionSystem {
   constructor() {
