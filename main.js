@@ -30,6 +30,7 @@ function gameLoop() {
 
   if (deltaTime > 16) {
     // 16ms = 60fps
+
     gameLogicSystem.update();
 
     requestAnimationFrame(gameLoop);
