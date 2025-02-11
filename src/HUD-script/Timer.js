@@ -1,28 +1,32 @@
-class Timer {
+export default class Timer {
   constructor() {
-    this.time = 0;
-    this.intervalId = null;
+    this.startTime = performance.now();
+    this.elapsedTime = 0;
+    this.running = true;
   }
 
   start() {
-    this.intervalId = setInterval(() => {
-      this.time++;
-      this.updateTime();
-    }, 1000);
+    this.startTime = performance.now();
+    this.running = true;
   }
 
   stop() {
-    clearInterval(this.intervalId);
+    this.elapsedTime = (performance.now() - this.startTime) / 1000;
+    this.running = false;
   }
 
-  updateTime() {
-    const minutes = Math.floor(this.time / 60);
-    const seconds = this.time % 60;
-    const timeString = `${minutes.toString().padStart(2, "0")}:${seconds
-      .toString()
-      .padStart(2, "0")}`;
-    document.getElementById("timer").innerText = timeString;
+  reset() {
+    this.startTime = performance.now();
+    this.elapsedTime = 0;
+  }
+
+  update() {
+    if (this.running) {
+      this.elapsedTime = (performance.now() - this.startTime) / 1000;
+    }
+  }
+
+  getElapsedTime() {
+    return this.elapsedTime;
   }
 }
-
-export default Timer;
